@@ -103,6 +103,7 @@
                                             <th> Image </th>
                                             <th> Nom </th>
                                             <th> Description </th>
+                                            <th> Nb. produits </th>
                                             <th> Statut </th>
                                             <th> Actions </th>
                                             <!-- <th> Fonctionnel </th> -->
@@ -140,6 +141,14 @@
                                                             <td><?php echo substr($description, 0, 50)."..."; ?></td>
                                                             <td>
                                                                 <?php
+                                                                $mysqli_query = "SELECT COUNT(*) AS nbrProd FROM produit WHERE idCategorie = {$id}";
+                                                                $res = mysqli_query($conn, $mysqli_query);
+                                                                $nbrProd = mysqli_fetch_assoc($res);
+                                                                echo $nbrProd['nbrProd'];
+                                                                ?>
+                                                            </td>
+                                                            <td>
+                                                                <?php
                                                                     if ($statut == "Actif") {
                                                                         echo "<label class='badge badge-info'>$statut</label>";
                                                                     } else if ($statut == "Inactif") {
@@ -173,6 +182,20 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-12">
                                                                         <?php echo $description; ?>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12 mt-4">
+                                                                        <h5>Produits:</h5>
+                                                                        <?php
+                                                                        $mysqli_query2 = "SELECT nomProduit AS catProd FROM produit WHERE idCategorie = {$id}";
+                                                                        $res2 = mysqli_query($conn, $mysqli_query2);
+                                                                        while($catProd = mysqli_fetch_assoc($res2)) {
+                                                                            ?>
+                                                                            <?php echo $catProd['catProd']; ?> |
+                                                                            <?php
+                                                                        }
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                                 </div>

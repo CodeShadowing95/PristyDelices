@@ -23,14 +23,24 @@
         }
     }
 
-    // Get all the ids of the items in the table 'panier'
-    $in_cart = $cart->getCart_product_ids($product->getProducts('panier'));
+    if(isset($_SESSION['user'])) {
+        // Get all the ids of the items in the table panier
+        $in_cart = $cart->getCart_product_ids($product->getProducts('panier', $_SESSION['user']));
 
-    // Get all the ids of the items in the table 'jaime'
-    $likeUsers = $product->getLikesUser($product->getProducts('jaime'));
+        // Get all the ids of the items in the table envies
+        $in_wishlist = $cart->getWishlist_product_ids($product->getProducts('envies', $_SESSION['user']));
 
-    // Get all the ids of the items in the table 'envies'
-    $in_wishlist = $cart->getWishlist_product_ids($product->getProducts('envies'));
+        // Get all the ids of the items in the table jaime
+        $likeUsers = $product->getLikesUser($product->getProducts('jaime', $_SESSION['user']));
+    } else {
+        $in_cart = $cart->getCart_product_ids($product->getProducts('panier'));
+
+        // Get all the ids of the items in the table envies
+        $in_wishlist = $cart->getWishlist_product_ids($product->getProducts('envies'));
+
+        // Get all the ids of the items in the table jaime
+        $likeUsers = $product->getLikesUser($product->getProducts('jaime'));
+    }
 
 
 

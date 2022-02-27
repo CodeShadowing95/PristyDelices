@@ -40,7 +40,7 @@
                 <?php
                 if(isset($_SESSION['user'])) {
                   ?>
-                  <a href="panier.php?#wishlist" class="px-3 border-right text-dark">Mes envies(<?php echo count($product->getProducts('envies')) != 0 ? count($product->getProducts('envies')) : 0; ?>)</a>
+                  <a href="panier.php?#wishlist" class="px-3 border-right text-dark">Mes envies(<?php echo count($product->getProducts('envies', $_SESSION['user'])) != 0 ? count($product->getProducts('envies', $_SESSION['user'])) : 0; ?>)</a>
                   <?php
                 }
                 ?>
@@ -138,7 +138,7 @@
                 <form action="" class="font-size-14 font-raleway">
                     <a href="panier.php" class="py-2 rounded color-primary-bg">
                         <span class="font-size-16 px-2 text-white"><i class="fas fa-shopping-cart"></i></span>
-                        <span class="px-3 py-2 rounded text-dark bg-light"><?php echo count($product->getProducts('panier')) != 0 ? count($product->getProducts('panier')) : 0; ?></span>
+                        <span class="px-3 py-2 rounded text-dark bg-light"><?php echo count($product->getProducts('panier', $_SESSION['user'])) != 0 ? count($product->getProducts('panier', $_SESSION['user'])) : 0; ?></span>
                     </a>
                 </form>
                 <?php

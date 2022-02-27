@@ -23,9 +23,9 @@
                 <?php
                     // Get all the items in the table 'panier'
                     // Check whether the table of products is empty or not
-                    if(count($product->getProducts('panier')) != 0){
+                    if(count($product->getProducts('panier', $_SESSION['user'])) != 0){
                         // Access to each row of the table
-                        foreach($product->getProducts('panier') as $item){
+                        foreach($product->getProducts('panier', $_SESSION['user']) as $item){
                             // Get each product by its id
                             $inCart = $product->getProduct($item['id_produit']);
                             // Display the datas through array_map

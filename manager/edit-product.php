@@ -158,8 +158,8 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="id" value="<?php echo $id; ?>" />
-                                    <button type="submit" name="submit" class="btn btn-gradient-primary mr-2">Confirmer les changements</button>
-                                    <button class="btn btn-light" name="cancel">Annuler</button>
+                                    <button type="submit" name="submit" class="btn btn-gradient-success mr-2">Confirmer les changements</button>
+                                    <button class="btn btn-danger" name="cancel">Annuler</button>
                                 </form>
 
                                 <?php

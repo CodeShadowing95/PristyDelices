@@ -12,10 +12,10 @@ class Produit {
     }
 
     // Fetch all the products from the database
-    public function getProducts($table = 'produit', $customer = null) {
-        if (isset($user)) {
+    public function getProducts($table = 'produit', $user = null) {
+        if(isset($user) && $user != null) {
             // Store the datas in a variable
-            $result = $this->bd->conn->query("SELECT * FROM {$table} WHERE id_client = {$customer}");
+            $result = $this->bd->conn->query("SELECT * FROM {$table} WHERE id_client = {$user}");
 
             $resultArray = array();
 

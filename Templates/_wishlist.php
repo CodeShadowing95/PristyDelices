@@ -20,9 +20,9 @@
                 <?php
                 // Get all the items in the table 'envies'
                 // Check whether the table of products is empty or not
-                if(count($product->getProducts('envies')) != 0) {
+                if(count($product->getProducts('envies', $_SESSION['user'])) != 0) {
                     // Access to each row of the table
-                    foreach($product->getProducts('envies') as $item) {
+                    foreach($product->getProducts('envies', $_SESSION['user']) as $item) {
                         // Get the id
                         $id = $item['id_produit'];
                         // Get the product associated with the id_produit in table 'envies'
@@ -76,7 +76,7 @@
 
                                 <div class="col-sm-2 text-right">
                                     <div class="font-baloo font-size-20 text-danger">
-                                        XAF<span class="product_price"> 0</span>
+                                        XAF<span class="product_price"> <?php echo $item['prix']; ?></span>
                                     </div>
                                 </div>
                             </div>

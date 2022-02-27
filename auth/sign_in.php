@@ -36,7 +36,7 @@
                 ?>
 
                 <h2 class="form-title">Connexion</h2>
-                <form method="POST" class="register-form" id="login-form">
+                <form action="" method="POST" class="register-form" id="login-form">
                     <div class="form-group">
                         <label for="login"><i class="zmdi zmdi-account material-icons-name"></i></label>
                         <input type="text" name="login" id="login" placeholder="Votre login ou email" required/>
