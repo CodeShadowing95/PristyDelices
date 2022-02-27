@@ -60,14 +60,14 @@
                                     <div class="col">
                                         <form method="post">
                                             <input type="hidden" name="productID" value="<?php echo isset($item['idProduit']) ? $item['idProduit'] : 1; ?>">
-                                            <input type="hidden" name="customerID" value="<?php echo 1; ?>">
+                                            <input type="hidden" name="customerID" value="<?php echo $_SESSION['user']; ?>">
                                             <a href="orderProduct.php?produitID=<?php echo $item['idProduit']; ?>" class="btn btn-primary form-control"><img src="./images/shopping-cart.png" alt="">&nbsp;&nbsp;Commande express</a>
                                         </form>
                                     </div>
                                     <div class="col">
                                         <form method="post">
                                             <input type="hidden" name="productID" value="<?php echo isset($item['idProduit']) ? $item['idProduit'] : 1; ?>">
-                                            <input type="hidden" name="customerID" value="<?php echo 1; ?>">
+                                            <input type="hidden" name="customerID" value="<?php echo $_SESSION['user']; ?>">
                                             <?php
                                             if(count($in_cart) == 0 && count($in_wishlist) == 0) {
                                               ?>
@@ -99,7 +99,7 @@
                                     <div class="col">
                                         <form method="post">
                                             <input type="hidden" name="productID" value="<?php echo isset($item['idProduit']) ? $item['idProduit'] : 1; ?>">
-                                            <input type="hidden" name="customerID" value="<?php echo 1; ?>">
+                                            <input type="hidden" name="customerID" value="<?php echo $_SESSION['user']; ?>">
                                             <?php
                                             if($likeUsers != null) {
                                                 if(in_array($item['idProduit'], $likeUsers)) {
