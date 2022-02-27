@@ -14,16 +14,20 @@
                         echo $_SESSION['confirm_pwd'];
                         unset($_SESSION['confirm_pwd']);
                     }
+                    if (isset($_SESSION['doublon'])) {
+                        echo $_SESSION['doublon'];
+                        unset($_SESSION['doublon']);
+                    }
                 ?>
                 <h2 class="form-title">Inscription</h2>
                 <form method="POST" class="register-form" id="register-form">
                     <div class="form-group">
                         <label for="nom"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                        <input type="text" name="nom" id="nom" placeholder="Nom(s)"/>
+                        <input type="text" name="nom" id="nom" placeholder="Nom(s)" required/>
                     </div>
                     <div class="form-group">
                         <label for="prenom"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                        <input type="text" name="prenom" id="prenom" placeholder="Prénom(s)"/>
+                        <input type="text" name="prenom" id="prenom" placeholder="Prénom(s)" required/>
                     </div>
                     <div class="form-group">
                         <label for="tel"><i class="zmdi zmdi-phone"></i></label>
@@ -56,7 +60,7 @@
             </div>
             <div class="signup-image">
                 <figure><img src="../images/default.png" alt="Login_image"></figure>
-                <a href="sign_in.php" class="signup-image-link">J(ai déjà un compte</a>
+                <a href="sign_in.php" class="signup-image-link">J'ai déjà un compte</a>
             </div>
         </div>
     </div>
@@ -101,34 +105,46 @@
             $error[] = 'Le mot de passe doit être confirmé';
         }
 
-        if (empty($error)) {
-            if($password == $repeat_pwd) {
-                $hashed_pwd = md5($password);
+        // Compare the login with all the others
+        $sql_query2 = "SELECT * FROM client WHERE login = '$login'";
 
-                $sql_query = "INSERT INTO client SET
-                    nom_client = '$nom',
-                    prenom = '$prenom',
-                    email = '$email',
-                    telephone = $tel,
-                    login = '$login',
-                    mot_de_passe = '$hashed_pwd'
-                ";
+        $getResult = mysqli_query($conn, $sql_query2);
 
-                $result = mysqli_query($conn, $sql_query) or die(mysqli_error($conn));
+        $countUser = mysqli_num_rows($getResult);
 
-                if($result == TRUE) {
-                    $_SESSION['new_user'] = "<p style='color:green;font-weight:bold;text-align:center;'>Compte créé avec succès</p>";
-                    header("Location:".HOME_URL."auth/sign_in.php");
+        if ($countUser == 0) {
+            if (empty($error)) {
+                if($password == $repeat_pwd) {
+                    $hashed_pwd = md5($password);
+
+                    $sql_query = "INSERT INTO client SET
+                        nom_client = '$nom',
+                        prenom = '$prenom',
+                        email = '$email',
+                        telephone = $tel,
+                        login = '$login',
+                        mot_de_passe = '$hashed_pwd'
+                    ";
+
+                    $result = mysqli_query($conn, $sql_query) or die(mysqli_error($conn));
+
+                    if($result == TRUE) {
+                        $_SESSION['new_user'] = "<p style='color:green;font-weight:bold;text-align:center;'>Compte créé avec succès</p>";
+                        header("Location:".HOME_URL."auth/sign_in.php");
+                    } else {
+                        $_SESSION['new_user'] = "Échec de l'opération";
+                        header("Location: sign_up.php");
+                    }
                 } else {
-                    $_SESSION['new_user'] = "Échec de l'opération";
+                    $_SESSION['confirm_pwd'] = "<span style='color:red;font-weight:bold;'>Erreur: Les mots de passe ne coïncident pas.</span>";
                     header("Location: sign_up.php");
                 }
             } else {
-                $_SESSION['confirm_pwd'] = "<span style='color:red;font-weight:bold;'>Erreur: Les mots de passe ne coïncident pas.</span>";
+                $_SESSION['not_empty'] = "<span style='color:red;font-weight:bold;'>Erreur: Certains champs sont invalides.</span>";
                 header("Location: sign_up.php");
             }
-        } else {
-            $_SESSION['not_empty'] = "<span style='color:red;font-weight:bold;'>Erreur: Certains champs sont invalides.</span>";
+        } else if ($countUser >= 1) {
+            $_SESSION['doublon'] = "<span style='color:red;font-weight:bold;'>Erreur: Login déja utilisé. Veuillez réesayez avec un autre.</span>";
             header("Location: sign_up.php");
         }
     }

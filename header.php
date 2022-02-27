@@ -25,7 +25,7 @@
     <?php
       // Require config.php file
       require("functions.php");
-      include('./auth/login-check.php');
+      // include('./auth/login-check.php');
     ?>
 
 </head>
