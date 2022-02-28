@@ -19,7 +19,9 @@
 
 <?php
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        header("Location:".HOME_URL);
+        if(isset($_POST['backHome'])) {
+            header("Location:".HOME_URL);
+        }
     }
 ?>
 
@@ -66,23 +68,26 @@
 
                             // print_r($result);
 
-                            $get_user = mysqli_num_rows($result);
+                            $count = mysqli_num_rows($result);
 
-                            if($get_user == 1) {
-                                $count = mysqli_num_rows($result);
+                            if($count == 1) {
+                                $data = mysqli_fetch_assoc($result);
 
-                                if($count == 1) {
-                                    $data = mysqli_fetch_assoc($result);
+                                $_SESSION['user'] = $data['id_client'];
+                                $_SESSION['nom'] = $data['nom_client'];
+                                $_SESSION['prenom'] = $data['prenom'];
+                                $_SESSION['login'] = $data['login'];
+                                $_SESSION['email'] = $data['email'];
+                                $_SESSION['telephone'] = $data['telephone'];
+                                $_SESSION['conn_succeeded'] = '
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Bienvenue sur Pristy Délices, </strong>'.$_SESSION['nom'].'
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>';
 
-                                    $_SESSION['user'] = $data['id_client'];
-                                    $_SESSION['nom'] = $data['nom_client'];
-                                    $_SESSION['prenom'] = $data['prenom'];
-                                    $_SESSION['login'] = $data['login'];
-                                    $_SESSION['email'] = $data['email'];
-                                    $_SESSION['telephone'] = $data['telephone'];
-
-                                    header("Location:".HOME_URL);
-                                }
+                                header("Location:".HOME_URL);
                             } else {
                                 echo "<span style='color:red;font-weight:bold;font-size:15px;text-align:center;'>Login ou mot de passe incorrects</span>";
                                 // header("Location:".$_SERVER['PHP_SELF']);

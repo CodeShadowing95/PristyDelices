@@ -177,6 +177,11 @@
         echo $_SESSION['added'];
         unset($_SESSION['added']);
       }
+
+      if(isset($_SESSION['conn_succeeded'])) {
+        echo $_SESSION['conn_succeeded'];
+        unset($_SESSION['conn_succeeded']);
+      }
   
     ?>
 
