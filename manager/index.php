@@ -79,7 +79,9 @@
                     <?php
                       $sql2 = "SELECT * FROM commande WHERE statutCommande='Livrée'";
                       $res2 = mysqli_query($conn, $sql2);
-                      $count2 = mysqli_num_rows($res2);
+                      if($res2 == TRUE){
+                        $count2 = mysqli_num_rows($res2);
+                      }
                     ?>
                     <h2 class="mb-5"><?php echo $count2; ?></h2>
                     <!-- <h6 class="card-text">Decreased by 10%</h6> -->
